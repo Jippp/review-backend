@@ -11,10 +11,8 @@ import { cryptoHash } from '@/utils'
     storage: diskStorage({
       destination: `${STATICPATH}/${POSTPATH}`,
       filename(req, file, callback) {
-        const temp = file.originalname.split('.')
-        const originExt = temp[temp.length - 1]
         const customFileName = cryptoHash(file.originalname);
-        callback(null, `${customFileName}.${originExt}`)
+        callback(null, `${customFileName}_${file.originalname}`)
       }
     })
   })],

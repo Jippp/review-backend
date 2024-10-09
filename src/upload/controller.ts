@@ -49,7 +49,7 @@ export class UploadController {
       return { 
         code: HttpStatus.OK,
         data: {
-          postPaths
+          postPaths: postPaths.map(item => item.replace(/.md/g, ''))
         }
       }
     }
