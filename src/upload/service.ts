@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs-extra';
+import { STATICPATH, POSTPATH } from '@/config'
+import { exitFile } from '@/utils';
 
 @Injectable()
 export class UploadService {
@@ -15,5 +17,20 @@ export class UploadService {
         }
       });
     });
+  }
+
+  /** 删除 */
+  async deletePost(fileHash: string) {
+    if(fileHash) {
+      const filePath = `${STATICPATH}/${POSTPATH}/${fileHash}.md`
+      if(exitFile(`${STATICPATH}/${POSTPATH}`, `${fileHash}.md`)) {
+        await fs.unlink(filePath)
+        return 'success'
+      }else {
+        return 'not found'
+      }
+    }else {
+      return 'param error'
+    }
   }
 }
